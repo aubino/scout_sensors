@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="scout_wheel">
+    <!-- Sensor frames ofset -->
+        <!-- IMU frame offset and parameters -->
+            <xacro:property name="imu_name"     value="imu" />
+            <xacro:property name="imu_x_offset" value="0.300" />
+            <xacro:property name="imu_y_offset" value="0.300" />
+            <xacro:property name="imu_z_offset" value="0.300" />
+            <xacro:property name="imu_roll_offset" value="0.000" />
+            <xacro:property name="imu_pitch_offset" value="0.000" />
+            <xacro:property name="imu_yaw_offset" value="0.000" />
+
+        <!-- GPS frame offset and parameters -->
+            <xacro:property name="gps_name" value="gps" />
+            <xacro:property name="gps_x_offset" value="0.300" />
+            <xacro:property name="gps_y_offset" value="0.300" />
+            <xacro:property name="gps_z_offset" value="0.300" />
+            <xacro:property name="gps_roll_offset" value="0.000" />
+            <xacro:property name="gps_pitch_offset" value="0.000" />
+            <xacro:property name="gps_yaw_offset" value="0.000" />
+            <xacro:property name="gps_latitude_reference" value="-30.06022459407145675" />
+            <xacro:property name="gps_heading_reference" value="90" />
+            <xacro:property name="gps_longitude_reference" value="-51.173913575780311191" />
+            <xacro:property name="gps_altitude_reference" value="10" />
+
+
+        <!-- Lidar frame offset -->
+            <xacro:property name="lidar_name" value="lidar" />
+            <xacro:property name="lidar_x_offset" value="0.300" />
+            <xacro:property name="lidar_y_offset" value="0.300" />
+            <xacro:property name="lidar_z_offset" value="0.300" />
+            <xacro:property name="lidar_roll_offset" value="0.000" />
+            <xacro:property name="lidar_pitch_offset" value="0.000" />
+            <xacro:property name="lidar_yaw_offset" value="0.000" />
+        
+        <!-- Realsense frame offset -->
+            <xacro:property name="realsense_name" value="realsense" />
+            <xacro:property name="realsense_x_offset" value="0.300" />
+            <xacro:property name="realsense_y_offset" value="0.300" />
+            <xacro:property name="realsense_z_offset" value="0.300" />
+            <xacro:property name="realsense_roll_offset" value="0.000" />
+            <xacro:property name="realsense_pitch_offset" value="0.000" />
+            <xacro:property name="realsense_yaw_offset" value="0.000" />
+    <!-- Sensor frames definition -->
+        <!-- IMU frame definition -->
+            <link name="${imu_name}_link">
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                        <box size="0.04 0.04 0.04"/>  <!-- tdb -->
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0 0 0.008" rpy="0 0 0" />
+                    <geometry>
+                        <box size="0.04 0.04 0.04"/> 
+                    </geometry>
+                </collision>
+            </link>
+        <!-- GPS frame definition --> 
+            <link name="${gps_name}_link">
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                        <box size="0.04 0.04 0.04"/>  <!-- tdb -->
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0 0 0.008" rpy="0 0 0" />
+                    <geometry>
+                        <box size="0.04 0.04 0.04"/> 
+                    </geometry>
+                </collision>
+            </link>
+            
+        <!-- Lidar frame definition -->
+            
+            <link name="${lidar_name}_link">
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                        <sphere size="0.1 0.1 0.1"/>  <!-- tdb -->
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0 0 0.008" rpy="0 0 0" />
+                    <geometry>
+                        <sphere size="0.1 0.1 0.1"/> 
+                    </geometry>
+                </collision>
+            </link>
+
+        <!-- Realsense frame definition -->
+
+            <link name="${realsense_name}_link">
+                <visual>
+                    <origin xyz="0 0 0" rpy="0 0 0" />
+                    <geometry>
+                        <box size="0.04 0.04 0.04"/>  <!-- tdb -->
+                    </geometry>
+                </visual>
+                <collision>
+                    <origin xyz="0 0 0.008" rpy="0 0 0" />
+                    <geometry>
+                        <box size="0.04 0.04 0.04"/> 
+                    </geometry>
+                </collision>
+            </link>
+    <!-- Sensor joints definition -->
+        <!-- IMU joint definition -->
+            <joint name="${imu_name}_to_base_link_joint" type="fixed">
+                <origin xyz="${imu_x_offset} ${imu_y_offset} ${imu_z_offset}" rpy="${imu_roll_offset} ${imu_pitch_offset} ${imu_yaw_offset}" />
+                <parent link="base_link" />
+                <child link="${imu_name}_link" />
+            </joint>
+
+        <!-- GPS joint definition -->
+            <joint name="${gps_name}_to_base_link_joint" type="fixed">
+                <origin xyz="${gps_x_offset} ${gps_y_offset} ${gps_z_offset}" rpy="${gps_roll_offset} ${gps_pitch_offset} ${gps_yaw_offset}" />
+                <parent link="base_link" />
+                <child link="${gps_name}_link" />
+            </joint>
+
+        <!-- Lidar joint definition -->
+            <joint name="${lidar_name}_to_base_link_joint" type="fixed">
+                <origin xyz="${lidar_x_offset} ${lidar_y_offset} ${lidar_z_offset}" rpy="${lidar_roll_offset} ${lildar_pitch_offset} ${lidar_yaw_offset}" />
+                <parent link="base_link" />
+                <child link="${lidar_name}_link" />
+            </joint>
+
+        <!-- Realsense joint definition -->
+            <joint name="${realsense_name}_to_base_link_joint" type="fixed">
+                <origin xyz="${realsense_x_offset} ${realsense_y_offset} ${realsense_z_offset}" rpy="${realsense_roll_offset} ${realsense_pitch_offset} ${realsense_yaw_offset}" />
+                <parent link="base_link" />
+                <child link="${realsense_name}_link" />
+            </joint>
+
+</robot>
