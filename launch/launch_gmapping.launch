@@ -1,0 +1,9 @@
+<launch>
+  <arg name="scan_topic" default="scan" />
+
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <remap from="scan" to="$(arg scan_topic)"/>
+  </node>
+  <!--    <remap from="cmd_vel" to="navigation_velocity_smoother/raw_cmd_vel"/>
+    <remap from="odom" to="$(arg odom_topic)"/> -->
+</launch>
